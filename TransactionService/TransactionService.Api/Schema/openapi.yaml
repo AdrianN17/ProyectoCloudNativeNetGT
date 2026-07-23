@@ -1,150 +1,236 @@
 openapi: 3.0.1
 info:
-  title: proyecto_billetera
-  description: ''
+  title: TransactionService
+  description: API for managing transactions and wallet recharges
   version: 1.0.0
-tags: []
+tags:
+  - name: Transactions
+  - name: Recharges
 paths:
-  /transaction:
+  /api/transactions:
     post:
       summary: Create Transaction
-      deprecated: false
-      description: ''
+      description: Creates a transfer between two wallets. Requires the User-App role.
       operationId: createTransaction
-      tags: []
-      parameters: []
+      tags:
+        - Transactions
+      parameters:
+        - name: Idempotency-Key
+          in: header
+          required: false
+          schema:
+            type: string
+            format: uuid
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/TransactionSchemaRequest'
-            examples: {}
         required: true
       responses:
         '200':
-          description: ''
+          description: Transaction created successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionSchemaIdResponse'
-          headers: {}
-      security: []
-  /transaction/{transactionId}:
+        '400':
+          description: Bad request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden – requires User-App role
+        '422':
+          description: Validation error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '500':
+          description: Internal server error
+      security:
+        - BearerAuth: []
+  /api/transactions/{transactionId}:
     delete:
       summary: Delete Transaction
-      deprecated: false
-      description: ''
+      description: Deletes a transaction by its identifier. Requires the Support role.
       operationId: deleteTransaction
-      tags: []
+      tags:
+        - Transactions
       parameters:
         - name: transactionId
           in: path
-          description: ''
           required: true
           schema:
             type: string
             format: uuid
       responses:
         '204':
-          description: ''
-          headers: {}
-      security: []
-  /transaction/wallet/{walletId}:
+          description: Transaction deleted successfully
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden – requires Support role
+        '404':
+          description: Transaction not found
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '500':
+          description: Internal server error
+      security:
+        - BearerAuth: []
+  /api/transactions/wallet/{fromWalletId}:
     get:
-      summary: Get Transactions
-      deprecated: false
-      description: ''
+      summary: Get Transactions by Wallet
+      description: Returns all transactions originating from the given wallet. Requires the User-App role.
       operationId: getTransactions
-      tags: []
+      tags:
+        - Transactions
       parameters:
-        - name: walletId
+        - name: fromWalletId
           in: path
-          description: ''
           required: true
           schema:
             type: string
             format: uuid
       responses:
         '200':
-          description: ''
+          description: List of transactions
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/TransactionSchemaResponse'
-          headers: {}
-      security: []
-  /recharge:
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden – requires User-App role
+        '500':
+          description: Internal server error
+      security:
+        - BearerAuth: []
+  /api/recharges:
     post:
       summary: Create Recharge
-      deprecated: false
-      description: ''
+      description: Creates a recharge for a wallet. Requires the Seller role.
       operationId: createRecharge
-      tags: []
-      parameters: []
+      tags:
+        - Recharges
+      parameters:
+        - name: Idempotency-Key
+          in: header
+          required: false
+          schema:
+            type: string
+            format: uuid
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/RechargeSchemaRequest'
-            examples: {}
         required: true
       responses:
         '200':
-          description: ''
+          description: Recharge created successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/RechargeSchemaIdResponse'
-          headers: {}
-      security: []
-  /recharge/{rechargeId}:
+        '400':
+          description: Bad request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden – requires Seller role
+        '422':
+          description: Validation error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '500':
+          description: Internal server error
+      security:
+        - BearerAuth: []
+  /api/recharges/{rechargeId}:
     delete:
       summary: Delete Recharge
-      deprecated: false
-      description: ''
+      description: Deletes a recharge by its identifier. Requires the Support role.
       operationId: deleteRecharge
-      tags: []
+      tags:
+        - Recharges
       parameters:
         - name: rechargeId
           in: path
-          description: ''
           required: true
           schema:
             type: string
+            format: uuid
       responses:
         '204':
-          description: ''
-          headers: {}
-      security: []
-  /recharge/wallet/{walletId}:
+          description: Recharge deleted successfully
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden – requires Support role
+        '404':
+          description: Recharge not found
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '500':
+          description: Internal server error
+      security:
+        - BearerAuth: []
+  /api/recharges/wallet/{walletId}:
     get:
-      summary: Get Recharges
-      deprecated: false
-      description: ''
+      summary: Get Recharges by Wallet
+      description: Returns all recharges for the given wallet. Requires Seller or User-App role.
       operationId: getRecharges
-      tags: []
+      tags:
+        - Recharges
       parameters:
         - name: walletId
           in: path
-          description: ''
           required: true
           schema:
             type: string
             format: uuid
       responses:
         '200':
-          description: ''
+          description: List of recharges
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/RechargeSchemaResponse'
-          headers: {}
-      security: []
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden – requires Seller or User-App role
+        '500':
+          description: Internal server error
+      security:
+        - BearerAuth: []
 components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     TransactionSchemaRequest:
       type: object
@@ -157,16 +243,17 @@ components:
           format: uuid
         Amount:
           type: number
+          format: double
         Currency:
           type: string
         SourceType:
           type: string
       required:
-        - SourceType
         - FromWalletId
         - ToWalletId
         - Amount
         - Currency
+        - SourceType
     TransactionSchemaResponse:
       type: object
       properties:
@@ -181,17 +268,18 @@ components:
           format: uuid
         Amount:
           type: number
+          format: double
         Currency:
           type: string
         SourceType:
           type: string
       required:
         - PaymentId
-        - SourceType
         - FromWalletId
         - ToWalletId
         - Amount
         - Currency
+        - SourceType
     TransactionSchemaIdResponse:
       type: object
       properties:
@@ -208,6 +296,7 @@ components:
           format: uuid
         Amount:
           type: number
+          format: double
         Currency:
           type: string
         MethodType:
@@ -228,16 +317,17 @@ components:
           format: uuid
         Amount:
           type: number
+          format: double
         Currency:
           type: string
         MethodType:
           type: string
       required:
+        - RechargeId
         - WalletId
         - Amount
         - Currency
         - MethodType
-        - RechargeId
     RechargeSchemaIdResponse:
       type: object
       properties:
@@ -246,7 +336,21 @@ components:
           format: uuid
       required:
         - RechargeId
-  responses: {}
-  securitySchemes: {}
-servers: []
-security: []
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        status:
+          type: integer
+          nullable: true
+        detail:
+          type: string
+          nullable: true
+        instance:
+          type: string
+          nullable: true
