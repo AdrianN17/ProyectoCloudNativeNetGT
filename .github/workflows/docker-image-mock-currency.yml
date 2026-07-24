@@ -49,6 +49,10 @@ jobs:
         resource-group: ${{ secrets.AKS_RESOURCE_GROUP }}
         cluster-name: ${{ secrets.AKS_CLUSTER_NAME }}
 
+    # Convertir kubeconfig para usar el token del Azure CLI (evita auth interactiva de AAD)
+    - name: Convert kubeconfig
+      run: kubelogin convert-kubeconfig -l azurecli
+
     # Sustituir imagen en el manifiesto y aplicar
     - name: Deploy to AKS
       run: |
