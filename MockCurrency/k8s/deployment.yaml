@@ -28,6 +28,10 @@ spec:
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: "Production"
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: "http://jaeger.tracing.svc.cluster.local:4317"
+            - name: OTEL_SERVICE_NAME
+              value: "mockcurrency"
           resources:
             requests:
               cpu: "100m"
@@ -62,4 +66,4 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 8080
-  type: LoadBalancer
+  type: ClusterIP

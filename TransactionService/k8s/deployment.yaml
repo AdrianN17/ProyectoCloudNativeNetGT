@@ -33,6 +33,10 @@ spec:
               value: "http://mockcurrency"
             - name: HttpClients__WalletServiceBaseUrl
               value: "http://walletservice"
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: "http://jaeger.tracing.svc.cluster.local:4317"
+            - name: OTEL_SERVICE_NAME
+              value: "transactionservice"
           resources:
             requests:
               cpu: "150m"
@@ -67,4 +71,4 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 8080
-  type: LoadBalancer
+  type: ClusterIP

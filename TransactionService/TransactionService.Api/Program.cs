@@ -1,4 +1,7 @@
-﻿using Scalar.AspNetCore;
+﻿using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
+using Scalar.AspNetCore;
 using TransactionService.Api;
 using TransactionService.Application;
 using TransactionService.Infrastructure;
@@ -15,6 +18,17 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddHealthChecks();
 
+builder.Services.AddOpenTelemetry()
+    .ConfigureResource(r => r.AddService("transactionservice"))
+    .WithTracing(t => t
+        .AddAspNetCoreInstrumentation()
+        .AddHttpClientInstrumentation()
+        .AddOtlpExporter())
+    .WithMetrics(m => m
+        .AddAspNetCoreInstrumentation()
+        .AddHttpClientInstrumentation()
+        .AddPrometheusExporter());
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -30,8 +44,7 @@ else
 
 // ✅ Esto hace que NO salga el mega detalle del DeveloperExceptionPage
 app.UseExceptionHandler(/*new ExceptionHandlerOptions { SuppressDiagnosticsCallback = _ => false }*/);;
-app.MapHealthChecks("/health");
-app.UseHttpsRedirection();
+app.MapHealthChecks("/health");app.MapPrometheusScrapingEndpoint();app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();

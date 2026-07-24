@@ -1,3 +1,6 @@
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using WalletService.Api;
 using WalletService.Application;
 using WalletService.Infrastructure;
@@ -15,6 +18,17 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddHealthChecks();
 
+builder.Services.AddOpenTelemetry()
+    .ConfigureResource(r => r.AddService("walletservice"))
+    .WithTracing(t => t
+        .AddAspNetCoreInstrumentation()
+        .AddHttpClientInstrumentation()
+        .AddOtlpExporter())
+    .WithMetrics(m => m
+        .AddAspNetCoreInstrumentation()
+        .AddHttpClientInstrumentation()
+        .AddPrometheusExporter());
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -30,8 +44,7 @@ else
 
 // ✅ Esto hace que NO salga el mega detalle del DeveloperExceptionPage
 app.UseExceptionHandler(/*new ExceptionHandlerOptions { SuppressDiagnosticsCallback = _ => false }*/);;
-app.MapHealthChecks("/health");
-app.UseHttpsRedirection();
+app.MapHealthChecks("/health");app.MapPrometheusScrapingEndpoint();app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();

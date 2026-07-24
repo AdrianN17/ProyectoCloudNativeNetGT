@@ -31,6 +31,10 @@ spec:
             # Apuntar al servicio de tipo de cambio interno del cluster
             - name: HttpClients__ExchangeServiceBaseUrl
               value: "http://mockcurrency"
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: "http://jaeger.tracing.svc.cluster.local:4317"
+            - name: OTEL_SERVICE_NAME
+              value: "walletservice"
           resources:
             requests:
               cpu: "150m"
@@ -65,4 +69,4 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 8080
-  type: LoadBalancer
+  type: ClusterIP
