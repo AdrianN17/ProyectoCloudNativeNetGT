@@ -1,7 +1,13 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: apis
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: walletservice
+  namespace: apis
   labels:
     app: walletservice
 spec:
@@ -51,6 +57,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: walletservice
+  namespace: apis
 spec:
   selector:
     app: walletservice

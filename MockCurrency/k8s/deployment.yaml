@@ -1,7 +1,13 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: apis
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mockcurrency
+  namespace: apis
   labels:
     app: mockcurrency
 spec:
@@ -48,6 +54,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mockcurrency
+  namespace: apis
 spec:
   selector:
     app: mockcurrency
