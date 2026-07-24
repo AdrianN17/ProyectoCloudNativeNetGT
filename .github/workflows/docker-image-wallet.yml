@@ -37,7 +37,7 @@ jobs:
         docker buildx build \
           --platform linux/arm64 \
           -t $IMAGE_NAME:$TAG \
-           --progress=plain \
+          --progress=plain \
           --push \
           ./WalletService
 
