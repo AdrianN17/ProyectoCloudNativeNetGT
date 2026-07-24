@@ -40,7 +40,7 @@ jobs:
     - name: Install kubelogin
       uses: azure/use-kubelogin@v1
       with:
-        kubelogin-version: 'latest'
+        kubelogin-version: 'v0.1.4'
 
     # Conectar al AKS
     - name: Set AKS context
