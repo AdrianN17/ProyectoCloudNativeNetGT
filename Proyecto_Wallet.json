@@ -507,22 +507,35 @@
               "name": "Create Wallet",
               "request": {
                 "method": "POST",
-                "header": [],
+                "header": [
+                  {
+                    "key": "Idempotency-Key",
+                    "value": "3b9ef9b5-ae78-4b1d-b4e5-d8c624e94f18",
+                    "disabled": false,
+                    "type": "default"
+                  }
+                ],
                 "auth": {
-                  "type": "noauth"
+                  "type": "bearer",
+                  "bearer": {
+                    "key": "token",
+                    "value": "{{runtime_access_token}}",
+                    "type": "string"
+                  }
                 },
                 "description": "",
                 "url": {
-                  "raw": "https://apimadriandemo01.azure-api.net/api/Wallets",
+                  "raw": "https://apimadriangt02.azure-api.net/wallet-service/api/wallets",
                   "protocol": "https",
                   "host": [
-                    "apimadriandemo01",
+                    "apimadriangt02",
                     "azure-api",
                     "net"
                   ],
                   "path": [
+                    "wallet-service",
                     "api",
-                    "Wallets"
+                    "wallets"
                   ],
                   "query": [],
                   "variable": []
@@ -544,20 +557,26 @@
                 "method": "PATCH",
                 "header": [],
                 "auth": {
-                  "type": "noauth"
+                  "type": "bearer",
+                  "bearer": {
+                    "key": "token",
+                    "value": "{{runtime_access_token}}",
+                    "type": "string"
+                  }
                 },
                 "description": "",
                 "url": {
-                  "raw": "https://apimadriandemo01.azure-api.net/api/Wallets/34a8f3f1-97bd-49a9-b504-69ea5e576d6d",
+                  "raw": "https://apimadriangt02.azure-api.net/wallet-service/api/wallets/34a8f3f1-97bd-49a9-b504-69ea5e576d6d",
                   "protocol": "https",
                   "host": [
-                    "apimadriandemo01",
+                    "apimadriangt02",
                     "azure-api",
                     "net"
                   ],
                   "path": [
+                    "wallet-service",
                     "api",
-                    "Wallets",
+                    "wallets",
                     "34a8f3f1-97bd-49a9-b504-69ea5e576d6d"
                   ],
                   "query": [],
@@ -576,79 +595,67 @@
             },
             {
               "name": "Get Wallet",
-              "protocolProfileBehavior": {
-                "disableBodyPruning": true
-              },
               "request": {
                 "method": "GET",
                 "header": [],
                 "auth": {
-                  "type": "noauth"
+                  "type": "bearer",
+                  "bearer": {
+                    "key": "token",
+                    "value": "{{runtime_access_token}}",
+                    "type": "string"
+                  }
                 },
                 "description": "",
                 "url": {
-                  "raw": "https://apimadriandemo01.azure-api.net/api/Wallets/34a8f3f1-97bd-49a9-b504-69ea5e576d6d",
+                  "raw": "https://apimadriangt02.azure-api.net/wallet-service/api/wallets/3b9ef9b5-ae78-4b1d-b4e5-d8c624e94f18",
                   "protocol": "https",
                   "host": [
-                    "apimadriandemo01",
+                    "apimadriangt02",
                     "azure-api",
                     "net"
                   ],
                   "path": [
+                    "wallet-service",
                     "api",
-                    "Wallets",
-                    "34a8f3f1-97bd-49a9-b504-69ea5e576d6d"
+                    "wallets",
+                    "3b9ef9b5-ae78-4b1d-b4e5-d8c624e94f18"
                   ],
                   "query": [],
                   "variable": []
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"Name\": \"Adrian1\",\r\n  \"DailyLimit\": 1500\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
                 }
               }
             },
             {
               "name": "Get Wallet Copy",
-              "protocolProfileBehavior": {
-                "disableBodyPruning": true
-              },
               "request": {
                 "method": "GET",
                 "header": [],
                 "auth": {
-                  "type": "noauth"
+                  "type": "bearer",
+                  "bearer": {
+                    "key": "token",
+                    "value": "{{runtime_access_token}}",
+                    "type": "string"
+                  }
                 },
                 "description": "",
                 "url": {
-                  "raw": "https://apimadriandemo01.azure-api.net/api/Wallets/1ea3b343-7c6b-4e44-88ed-62dcc8b71681",
+                  "raw": "https://apimadriangt02.azure-api.net/wallet-service/api/wallets/1c377592-ffd1-491a-ab03-ece4ac2c99cd",
                   "protocol": "https",
                   "host": [
-                    "apimadriandemo01",
+                    "apimadriangt02",
                     "azure-api",
                     "net"
                   ],
                   "path": [
+                    "wallet-service",
                     "api",
-                    "Wallets",
-                    "1ea3b343-7c6b-4e44-88ed-62dcc8b71681"
+                    "wallets",
+                    "1c377592-ffd1-491a-ab03-ece4ac2c99cd"
                   ],
                   "query": [],
                   "variable": []
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"Name\": \"Adrian1\",\r\n  \"DailyLimit\": 1500\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
                 }
               }
             },
@@ -658,20 +665,26 @@
                 "method": "DELETE",
                 "header": [],
                 "auth": {
-                  "type": "noauth"
+                  "type": "bearer",
+                  "bearer": {
+                    "key": "token",
+                    "value": "{{runtime_access_token}}",
+                    "type": "string"
+                  }
                 },
                 "description": "",
                 "url": {
-                  "raw": "https://apimadriandemo01.azure-api.net/api/Wallets/7d809580-18cd-49eb-acf5-daaf8fa3a996",
+                  "raw": "https://apimadriangt02.azure-api.net/wallet-service/api/wallets/7d809580-18cd-49eb-acf5-daaf8fa3a996",
                   "protocol": "https",
                   "host": [
-                    "apimadriandemo01",
+                    "apimadriangt02",
                     "azure-api",
                     "net"
                   ],
                   "path": [
+                    "wallet-service",
                     "api",
-                    "Wallets",
+                    "wallets",
                     "7d809580-18cd-49eb-acf5-daaf8fa3a996"
                   ],
                   "query": [],
@@ -697,29 +710,42 @@
               "name": "Create Transaction",
               "request": {
                 "method": "POST",
-                "header": [],
+                "header": [
+                  {
+                    "key": "Idempotency-Key",
+                    "value": "3b9ef9b5-ae78-4b1d-b4e5-d8c624e94f18",
+                    "disabled": false,
+                    "type": "default"
+                  }
+                ],
                 "auth": {
-                  "type": "noauth"
+                  "type": "bearer",
+                  "bearer": {
+                    "key": "token",
+                    "value": "{{runtime_access_token}}",
+                    "type": "string"
+                  }
                 },
                 "description": "",
                 "url": {
-                  "raw": "https://apimadriandemo01.azure-api.net/api-transaction/Transactions",
+                  "raw": "https://apimadriangt02.azure-api.net/transaction-service/api/transactions",
                   "protocol": "https",
                   "host": [
-                    "apimadriandemo01",
+                    "apimadriangt02",
                     "azure-api",
                     "net"
                   ],
                   "path": [
-                    "api-transaction",
-                    "Transactions"
+                    "transaction-service",
+                    "api",
+                    "transactions"
                   ],
                   "query": [],
                   "variable": []
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"FromWalletId\": \"34a8f3f1-97bd-49a9-b504-69ea5e576d6d\",\r\n    \"ToWalletId\": \"1ea3b343-7c6b-4e44-88ed-62dcc8b71681\",\r\n    \"Amount\": 20,\r\n    \"Currency\": \"PEN\",\r\n    \"SourceType\": \"APP\"\r\n}",
+                  "raw": "{\n    \"FromWalletId\": \"1c377592-ffd1-491a-ab03-ece4ac2c99cd\",\n    \"ToWalletId\": \"3b9ef9b5-ae78-4b1d-b4e5-d8c624e94f18\",\n    \"Amount\": 10,\n    \"Currency\": \"PEN\",\n    \"SourceType\": \"APP\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -730,41 +756,35 @@
             },
             {
               "name": "Get Transactions",
-              "protocolProfileBehavior": {
-                "disableBodyPruning": true
-              },
               "request": {
                 "method": "GET",
                 "header": [],
                 "auth": {
-                  "type": "noauth"
+                  "type": "bearer",
+                  "bearer": {
+                    "key": "token",
+                    "value": "{{runtime_access_token}}",
+                    "type": "string"
+                  }
                 },
                 "description": "",
                 "url": {
-                  "raw": "https://apimadriandemo01.azure-api.net/api-transaction/Transactions/wallet/34a8f3f1-97bd-49a9-b504-69ea5e576d6d",
+                  "raw": "https://apimadriangt02.azure-api.net/transaction-service/api/transactions/wallet/1c377592-ffd1-491a-ab03-ece4ac2c99cd",
                   "protocol": "https",
                   "host": [
-                    "apimadriandemo01",
+                    "apimadriangt02",
                     "azure-api",
                     "net"
                   ],
                   "path": [
-                    "api-transaction",
-                    "Transactions",
+                    "transaction-service",
+                    "api",
+                    "transactions",
                     "wallet",
-                    "34a8f3f1-97bd-49a9-b504-69ea5e576d6d"
+                    "1c377592-ffd1-491a-ab03-ece4ac2c99cd"
                   ],
                   "query": [],
                   "variable": []
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n    \"FromWalletId\": \"34a8f3f1-97bd-49a9-b504-69ea5e576d6d\",\r\n    \"ToWalletId\": \"1ea3b343-7c6b-4e44-88ed-62dcc8b71681\",\r\n    \"Amount\": 50,\r\n    \"Currency\": \"PEN\",\r\n    \"SourceType\": \"APP\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
                 }
               }
             },
@@ -774,20 +794,26 @@
                 "method": "DELETE",
                 "header": [],
                 "auth": {
-                  "type": "noauth"
+                  "type": "bearer",
+                  "bearer": {
+                    "key": "token",
+                    "value": "{{runtime_access_token}}",
+                    "type": "string"
+                  }
                 },
                 "description": "",
                 "url": {
-                  "raw": "https://apimadriandemo01.azure-api.net/api-transaction/Transactions/1ceb0428-8085-4041-b42e-8a8a91962b1a",
+                  "raw": "https://apimadriangt02.azure-api.net/transaction-service/api/transactions/1ceb0428-8085-4041-b42e-8a8a91962b1a",
                   "protocol": "https",
                   "host": [
-                    "apimadriandemo01",
+                    "apimadriangt02",
                     "azure-api",
                     "net"
                   ],
                   "path": [
-                    "api-transaction",
-                    "Transactions",
+                    "transaction-service",
+                    "api",
+                    "transactions",
                     "1ceb0428-8085-4041-b42e-8a8a91962b1a"
                   ],
                   "query": [],
@@ -813,29 +839,42 @@
               "name": "Create Recharge",
               "request": {
                 "method": "POST",
-                "header": [],
+                "header": [
+                  {
+                    "key": "Idempotency-Key",
+                    "value": "3b9ef9b5-ae78-4b1d-b4e5-d8c624e94f18",
+                    "disabled": false,
+                    "type": "default"
+                  }
+                ],
                 "auth": {
-                  "type": "noauth"
+                  "type": "bearer",
+                  "bearer": {
+                    "key": "token",
+                    "value": "{{runtime_access_token}}",
+                    "type": "string"
+                  }
                 },
                 "description": "",
                 "url": {
-                  "raw": "https://apimadriandemo01.azure-api.net/api-transaction/Recharges",
+                  "raw": "https://apimadriangt02.azure-api.net/transaction-service/api/recharges",
                   "protocol": "https",
                   "host": [
-                    "apimadriandemo01",
+                    "apimadriangt02",
                     "azure-api",
                     "net"
                   ],
                   "path": [
-                    "api-transaction",
-                    "Recharges"
+                    "transaction-service",
+                    "api",
+                    "recharges"
                   ],
                   "query": [],
                   "variable": []
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"WalletId\": \"34a8f3f1-97bd-49a9-b504-69ea5e576d6d\",\r\n    \"Amount\": 200,\r\n    \"Currency\": \"PEN\",\r\n    \"MethodType\": \"TIENDA\"\r\n}",
+                  "raw": "{\n    \"WalletId\": \"1c377592-ffd1-491a-ab03-ece4ac2c99cd\",\n    \"Amount\": 200,\n    \"Currency\": \"PEN\",\n    \"MethodType\": \"TIENDA\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -850,20 +889,26 @@
                 "method": "GET",
                 "header": [],
                 "auth": {
-                  "type": "noauth"
+                  "type": "bearer",
+                  "bearer": {
+                    "key": "token",
+                    "value": "{{runtime_access_token}}",
+                    "type": "string"
+                  }
                 },
                 "description": "",
                 "url": {
-                  "raw": "https://apimadriandemo01.azure-api.net/api-transaction/Recharges/wallet/34a8f3f1-97bd-49a9-b504-69ea5e576d6d",
+                  "raw": "https://apimadriangt02.azure-api.net/transaction-service/api/recharges/wallet/34a8f3f1-97bd-49a9-b504-69ea5e576d6d",
                   "protocol": "https",
                   "host": [
-                    "apimadriandemo01",
+                    "apimadriangt02",
                     "azure-api",
                     "net"
                   ],
                   "path": [
-                    "api-transaction",
-                    "Recharges",
+                    "transaction-service",
+                    "api",
+                    "recharges",
                     "wallet",
                     "34a8f3f1-97bd-49a9-b504-69ea5e576d6d"
                   ],
@@ -878,20 +923,26 @@
                 "method": "DELETE",
                 "header": [],
                 "auth": {
-                  "type": "noauth"
+                  "type": "bearer",
+                  "bearer": {
+                    "key": "token",
+                    "value": "{{runtime_access_token}}",
+                    "type": "string"
+                  }
                 },
                 "description": "",
                 "url": {
-                  "raw": "https://apimadriandemo01.azure-api.net/api-transaction/Recharges/e174485b-c0db-4e0c-808b-8144fe206243",
+                  "raw": "https://apimadriangt02.azure-api.net/transaction-service/api/recharges/e174485b-c0db-4e0c-808b-8144fe206243",
                   "protocol": "https",
                   "host": [
-                    "apimadriandemo01",
+                    "apimadriangt02",
                     "azure-api",
                     "net"
                   ],
                   "path": [
-                    "api-transaction",
-                    "Recharges",
+                    "transaction-service",
+                    "api",
+                    "recharges",
                     "e174485b-c0db-4e0c-808b-8144fe206243"
                   ],
                   "query": [],
@@ -919,15 +970,15 @@
                 },
                 "description": "",
                 "url": {
-                  "raw": "https://apimadriandemo01.azure-api.net/api-currency/convert/currency/USD",
+                  "raw": "https://apimadriangt02.azure-api.net/mock-currency/convert/currency/USD",
                   "protocol": "https",
                   "host": [
-                    "apimadriandemo01",
+                    "apimadriangt02",
                     "azure-api",
                     "net"
                   ],
                   "path": [
-                    "api-currency",
+                    "mock-currency",
                     "convert",
                     "currency",
                     "USD"
@@ -952,15 +1003,15 @@
                 },
                 "description": "",
                 "url": {
-                  "raw": "https://apimadriandemo01.azure-api.net/api-currency/convert/currency/PEN",
+                  "raw": "https://apimadriangt02.azure-api.net/mock-currency/convert/currency/PEN",
                   "protocol": "https",
                   "host": [
-                    "apimadriandemo01",
+                    "apimadriangt02",
                     "azure-api",
                     "net"
                   ],
                   "path": [
-                    "api-currency",
+                    "mock-currency",
                     "convert",
                     "currency",
                     "PEN"
@@ -1195,17 +1246,17 @@
   ],
   "variable": [
     {
+      "key": "runtime_device_code",
+      "value": "",
+      "type": "default"
+    },
+    {
       "key": "access_token",
       "value": "",
       "type": "default"
     },
     {
       "key": "runtime_access_token",
-      "value": "",
-      "type": "default"
-    },
-    {
-      "key": "runtime_device_code",
       "value": "",
       "type": "default"
     }
