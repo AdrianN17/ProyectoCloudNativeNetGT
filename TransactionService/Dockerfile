@@ -1,5 +1,5 @@
 ﻿# Etapa 1: Construcción (build)
-FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+FROM --platform=linux/arm64 mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
@@ -27,7 +27,7 @@ RUN dotnet publish "TransactionService.Api.csproj" -c "$BUILD_CONFIGURATION" -o 
 
 
 # Etapa 2: final - runtime
-FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
+FROM --platform=linux/arm64 mcr.microsoft.com/dotnet/aspnet:10.0 AS final
 WORKDIR /app
 
 COPY --from=publish /app/publish .

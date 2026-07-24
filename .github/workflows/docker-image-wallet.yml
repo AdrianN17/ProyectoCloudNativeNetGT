@@ -27,7 +27,7 @@ jobs:
       run: |
         IMAGE_NAME=${{ secrets.ACR_NAME }}.azurecr.io/walletservice
         TAG=${{ github.sha }}
-        docker build --platform linux/amd64 -t $IMAGE_NAME:$TAG ./WalletService
+        docker build --platform linux/arm64 -t $IMAGE_NAME:$TAG ./WalletService
 
     # Push
     - name: Push Docker image
