@@ -60,6 +60,8 @@ kind: Service
 metadata:
   name: transactionservice
   namespace: apis
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
 spec:
   selector:
     app: transactionservice
@@ -67,4 +69,4 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 8080
-  type: ClusterIP
+  type: LoadBalancer

@@ -58,6 +58,8 @@ kind: Service
 metadata:
   name: walletservice
   namespace: apis
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
 spec:
   selector:
     app: walletservice
@@ -65,4 +67,4 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 8080
-  type: ClusterIP
+  type: LoadBalancer
