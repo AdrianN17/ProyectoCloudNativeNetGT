@@ -65,3 +65,4 @@ jobs:
         TAG=${{ github.sha }}
         sed "s|ACR_NAME.azurecr.io/transactionservice:IMAGE_TAG|$IMAGE_NAME:$TAG|g" \
           ./TransactionService/k8s/deployment.yaml | kubectl apply -f -
+        kubectl apply -f ./TransactionService/k8s/ingress.yaml
