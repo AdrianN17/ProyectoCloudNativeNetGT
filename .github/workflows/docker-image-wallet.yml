@@ -35,3 +35,18 @@ jobs:
         IMAGE_NAME=${{ secrets.ACR_NAME }}.azurecr.io/walletservice
         TAG=${{ github.sha }}
         docker push $IMAGE_NAME:$TAG
+
+    # Conectar al AKS
+    - name: Set AKS context
+      uses: azure/aks-set-context@v3
+      with:
+        resource-group: ${{ secrets.AKS_RESOURCE_GROUP }}
+        cluster-name: ${{ secrets.AKS_CLUSTER_NAME }}
+
+    # Sustituir imagen en el manifiesto y aplicar
+    - name: Deploy to AKS
+      run: |
+        IMAGE_NAME=${{ secrets.ACR_NAME }}.azurecr.io/walletservice
+        TAG=${{ github.sha }}
+        sed "s|ACR_NAME.azurecr.io/walletservice:IMAGE_TAG|$IMAGE_NAME:$TAG|g" \
+          ./WalletService/k8s/deployment.yaml | kubectl apply -f -

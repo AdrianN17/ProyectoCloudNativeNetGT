@@ -13,6 +13,8 @@ builder.Services.AddApplication();
 
 builder.Services.AddInfrastructure(builder.Configuration);
 
+builder.Services.AddHealthChecks();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -28,7 +30,7 @@ else
 
 // ✅ Esto hace que NO salga el mega detalle del DeveloperExceptionPage
 app.UseExceptionHandler(/*new ExceptionHandlerOptions { SuppressDiagnosticsCallback = _ => false }*/);;
-
+app.MapHealthChecks("/health");
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transactionservice
+  labels:
+    app: transactionservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: transactionservice
+  template:
+    metadata:
+      labels:
+        app: transactionservice
+    spec:
+      containers:
+        - name: transactionservice
+          image: ACR_NAME.azurecr.io/transactionservice:IMAGE_TAG
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "Production"
+            # Apuntar a los servicios internos del cluster
+            - name: HttpClients__ExchangeServiceBaseUrl
+              value: "http://mockcurrency"
+            - name: HttpClients__WalletServiceBaseUrl
+              value: "http://walletservice"
+          resources:
+            requests:
+              cpu: "150m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 20
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: transactionservice
+spec:
+  selector:
+    app: transactionservice
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP
