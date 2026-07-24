@@ -22,19 +22,23 @@ jobs:
       run: |
         az acr login --name ${{ secrets.ACR_NAME }}
 
-    # Build + Tag
-    - name: Build Docker image
-      run: |
-        IMAGE_NAME=${{ secrets.ACR_NAME }}.azurecr.io/transactionservice
-        TAG=${{ github.sha }}
-        docker build --platform linux/arm64 -t $IMAGE_NAME:$TAG ./TransactionService
+    # Emulación ARM64 en el runner amd64
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
 
-    # Push
-    - name: Push Docker image
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    # Build + Tag
+    - name: Build and push Docker image
       run: |
         IMAGE_NAME=${{ secrets.ACR_NAME }}.azurecr.io/transactionservice
         TAG=${{ github.sha }}
-        docker push $IMAGE_NAME:$TAG
+        docker buildx build \
+          --platform linux/arm64 \
+          -t $IMAGE_NAME:$TAG \
+          --push \
+          ./TransactionService
 
     # Instalar kubelogin (requerido para clusters AKS con AAD)
     - name: Install kubelogin

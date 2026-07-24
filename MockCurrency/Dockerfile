@@ -1,11 +1,11 @@
-FROM --platform=linux/arm64 mcr.microsoft.com/dotnet/sdk:10.0-alpine AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0-alpine AS build
 WORKDIR /src
 COPY MockCurrency.csproj .
 RUN dotnet restore
 COPY . .
 RUN dotnet publish -c Release -o /app --self-contained false
 
-FROM --platform=linux/arm64 mcr.microsoft.com/dotnet/aspnet:10.0-alpine AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine AS runtime
 WORKDIR /app
 COPY --from=build /app .
 ENV ASPNETCORE_URLS=http://+:8080
