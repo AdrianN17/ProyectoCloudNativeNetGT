@@ -60,8 +60,6 @@ kind: Service
 metadata:
   name: transactionservice
   namespace: apis
-  annotations:
-    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
 spec:
   selector:
     app: transactionservice

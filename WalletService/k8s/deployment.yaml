@@ -58,8 +58,6 @@ kind: Service
 metadata:
   name: walletservice
   namespace: apis
-  annotations:
-    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
 spec:
   selector:
     app: walletservice
