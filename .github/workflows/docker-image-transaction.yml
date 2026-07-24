@@ -36,6 +36,12 @@ jobs:
         TAG=${{ github.sha }}
         docker push $IMAGE_NAME:$TAG
 
+    # Instalar kubelogin (requerido para clusters AKS con AAD)
+    - name: Install kubelogin
+      uses: azure/use-kubelogin@v1
+      with:
+        kubelogin-version: 'latest'
+
     # Conectar al AKS
     - name: Set AKS context
       uses: azure/aks-set-context@v3
