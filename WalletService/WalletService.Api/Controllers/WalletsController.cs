@@ -31,6 +31,7 @@ public class WalletsController(IMediator mediator) : ControllerBase
 
     // GET /wallets/{walletId}
     [HttpGet("{walletId:guid}", Name = "Wallet_GetById")]
+    [Authorize(Roles = "Support,User-App,Seller")]
     [ProducesResponseType(typeof(WalletSchemaResponse), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetById(
         [FromRoute] Guid walletId,
@@ -46,6 +47,7 @@ public class WalletsController(IMediator mediator) : ControllerBase
 
     // PATCH /wallets/{walletId}
     [HttpPatch("{walletId:guid}", Name = "Wallet_Update")]
+    [Authorize(Roles = "Support")]
     [ProducesResponseType(typeof(WalletSchemaIdResponse), StatusCodes.Status200OK)]
     public async Task<IActionResult> Update(
         [FromRoute] Guid walletId,

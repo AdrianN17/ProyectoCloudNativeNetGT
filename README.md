@@ -291,8 +291,8 @@ La autenticación usa **Azure AD (Entra ID)** con tokens JWT Bearer. Cada servic
 | Método | Endpoint | Rol requerido | Idempotencia |
 |---|---|---|---|
 | `POST` | `/api/wallets` | `Support` | `Idempotency-Key` header (UUID) |
-| `GET` | `/api/wallets/{walletId}` | cualquier rol autenticado | — |
-| `PATCH` | `/api/wallets/{walletId}` | cualquier rol autenticado | — |
+| `GET` | `/api/wallets/{walletId}` | `Support`, `User-App`, `Seller` | — |
+| `PATCH` | `/api/wallets/{walletId}` | `Support` | — |
 | `DELETE` | `/api/wallets/{walletId}` | `Support` | — |
 
 ---
