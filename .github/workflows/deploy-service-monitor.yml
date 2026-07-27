@@ -1,0 +1,42 @@
+name: Deploy Service Monitor
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'k8s/service-monitor.yaml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # Login en Azure
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    # Instalar kubelogin (requerido para clusters AKS con AAD)
+    - name: Install kubelogin
+      uses: azure/use-kubelogin@v1
+      with:
+        kubelogin-version: 'v0.1.4'
+
+    # Conectar al AKS
+    - name: Set AKS context
+      uses: azure/aks-set-context@v3
+      with:
+        resource-group: ${{ secrets.AKS_RESOURCE_GROUP }}
+        cluster-name: ${{ secrets.AKS_CLUSTER_NAME }}
+
+    # Convertir kubeconfig para usar el token del Azure CLI (evita auth interactiva de AAD)
+    - name: Convert kubeconfig
+      run: kubelogin convert-kubeconfig -l azurecli
+
+    # Aplicar el ServiceMonitor
+    - name: Apply ServiceMonitor
+      run: kubectl apply -f ./k8s/service-monitor.yaml
