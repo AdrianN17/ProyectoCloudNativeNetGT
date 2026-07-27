@@ -40,7 +40,7 @@ namespace TransactionService.Api.Controllers
         }
 
         [HttpGet("wallet/{fromWalletId:guid}", Name = "Transaction_GetAllByFromWalletId")]
-        [Authorize(Roles = "User-App")]
+        [Authorize(Roles = "User-App,Support")]
         public async Task<IActionResult> GetAllByFromWalletId(Guid fromWalletId, CancellationToken cancellationToken)
         {
             var result = await mediator.Send(new GetAllByFromWalletIdTransactionQuery(fromWalletId), cancellationToken);

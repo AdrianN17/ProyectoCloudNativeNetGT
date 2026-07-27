@@ -280,10 +280,10 @@ La autenticación usa **Azure AD (Entra ID)** con tokens JWT Bearer. Cada servic
 | Método | Endpoint | Rol requerido | Idempotencia |
 |---|---|---|---|
 | `POST` | `/api/transactions` | `User-App` | `Idempotency-Key` header (UUID) |
-| `GET` | `/api/transactions/wallet/{fromWalletId}` | `User-App` | — |
+| `GET` | `/api/transactions/wallet/{fromWalletId}` | `User-App`, `Support` | — |
 | `DELETE` | `/api/transactions/{transactionId}` | `Support` | — |
 | `POST` | `/api/recharges` | `Seller` | `Idempotency-Key` header (UUID) |
-| `GET` | `/api/recharges/wallet/{walletId}` | `Seller`, `User-App` | — |
+| `GET` | `/api/recharges/wallet/{walletId}` | `Seller`, `User-App`, `Support` | — |
 | `DELETE` | `/api/recharges/{rechargeId}` | `Support` | — |
 
 ### Endpoints — WalletService
