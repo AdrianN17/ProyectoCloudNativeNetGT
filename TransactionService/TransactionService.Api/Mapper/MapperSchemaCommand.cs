@@ -29,7 +29,8 @@ public static class MapperSchemaCommand
             WalletId   = dto.WalletId,
             Amount     = (double)dto.Amount,
             Currency   = dto.Currency,
-            MethodType = dto.MethodType
+            MethodType = dto.MethodType,
+            CreatedAt  = dto.CreatedAt
         };
 
     public static RechargeSchemaIdResponse ToRechargeIdResponse(this Guid rechargeId)
@@ -57,7 +58,8 @@ public static class MapperSchemaCommand
             ToWalletId   = dto.ToWalletId,
             Amount       = (double)dto.Amount,
             Currency     = dto.Currency,
-            SourceType   = dto.SourceType
+            SourceType   = dto.SourceType,
+            CreatedAt    = dto.CreatedAt
         };
 
     public static TransactionSchemaIdResponse ToTransactionIdResponse(this Guid transactionId)

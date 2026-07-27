@@ -86,6 +86,9 @@ namespace TransactionService.Api.Schema
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public string SourceType { get; set; }
 
+        [System.Text.Json.Serialization.JsonPropertyName("CreatedAt")]
+        public System.DateTime CreatedAt { get; set; }
+
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
 
         [System.Text.Json.Serialization.JsonExtensionData]
@@ -168,6 +171,9 @@ namespace TransactionService.Api.Schema
         [System.Text.Json.Serialization.JsonPropertyName("MethodType")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public string MethodType { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("CreatedAt")]
+        public System.DateTime CreatedAt { get; set; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
 

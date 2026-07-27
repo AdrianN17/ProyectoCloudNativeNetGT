@@ -7,5 +7,6 @@ public record TransactionDto(
     decimal Amount,
     string Currency,
     string SourceType,
-    string TransactionStatus
+    string TransactionStatus,
+    DateTime CreatedAt
 );

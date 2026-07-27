@@ -273,6 +273,9 @@ components:
           type: string
         SourceType:
           type: string
+        CreatedAt:
+          type: string
+          format: date-time
       required:
         - PaymentId
         - FromWalletId
@@ -280,6 +283,7 @@ components:
         - Amount
         - Currency
         - SourceType
+        - CreatedAt
     TransactionSchemaIdResponse:
       type: object
       properties:
@@ -322,12 +326,16 @@ components:
           type: string
         MethodType:
           type: string
+        CreatedAt:
+          type: string
+          format: date-time
       required:
         - RechargeId
         - WalletId
         - Amount
         - Currency
         - MethodType
+        - CreatedAt
     RechargeSchemaIdResponse:
       type: object
       properties:

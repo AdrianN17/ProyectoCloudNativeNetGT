@@ -30,7 +30,8 @@ public sealed class GetAllByWalletIdRechargeQueryHandler
             r.Amount.Value,
             r.Amount.Currency.ToString(),
             r.MethodType.ToString(),
-            r.RechargeStatus.ToString()
+            r.RechargeStatus.ToString(),
+            r.CreatedAt
         )).ToList();
     }
 }

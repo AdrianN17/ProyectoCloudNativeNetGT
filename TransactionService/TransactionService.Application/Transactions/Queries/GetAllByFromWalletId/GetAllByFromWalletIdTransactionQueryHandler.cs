@@ -31,7 +31,8 @@ public sealed class GetAllByFromWalletIdTransactionQueryHandler
             t.Amount.Value,
             t.Amount.Currency.ToString(),
             t.SourceType.ToString(),
-            t.TransactionStatus.ToString()
+            t.TransactionStatus.ToString(),
+            t.CreatedAt
         )).ToList();
     }
 }

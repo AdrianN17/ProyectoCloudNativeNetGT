@@ -6,5 +6,6 @@ public record RechargeDto(
     decimal Amount,
     string Currency,
     string MethodType,
-    string RechargeStatus
+    string RechargeStatus,
+    DateTime CreatedAt
 );
