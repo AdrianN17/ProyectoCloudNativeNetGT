@@ -40,11 +40,11 @@ namespace WalletService.Infrastructure.Persistence.Repositories
 
         public async Task<Wallet?> GetByEmailAsync(string email, CancellationToken cancellationToken = default)
         {
-            var trimmed = email.Trim().ToLower();
+            var emailVO = Email.Create(email.Trim());
             return await _dbContext.Wallets
                 .Include(a => a.WalletLimit)
                 .Include(b => b.WalletBalance)
-                .FirstOrDefaultAsync(e => EF.Property<string>(e, "Email").ToLower() == trimmed && !e.IsDeleted, cancellationToken);
+                .FirstOrDefaultAsync(e => e.Email == emailVO && !e.IsDeleted, cancellationToken);
         }
 
         public async Task UpdateAsync(Wallet wallet, CancellationToken cancellationToken = default)
