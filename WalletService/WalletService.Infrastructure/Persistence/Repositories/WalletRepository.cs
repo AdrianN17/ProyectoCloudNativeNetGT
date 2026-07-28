@@ -38,6 +38,15 @@ namespace WalletService.Infrastructure.Persistence.Repositories
                 .FirstOrDefaultAsync(e => e.Id == id && !e.IsDeleted);
         }
 
+        public async Task<Wallet?> GetByEmailAsync(string email, CancellationToken cancellationToken = default)
+        {
+            var trimmed = email.Trim().ToLower();
+            return await _dbContext.Wallets
+                .Include(a => a.WalletLimit)
+                .Include(b => b.WalletBalance)
+                .FirstOrDefaultAsync(e => e.Email.Address.ToLower() == trimmed && !e.IsDeleted, cancellationToken);
+        }
+
         public async Task UpdateAsync(Wallet wallet, CancellationToken cancellationToken = default)
         {
             _dbContext.Wallets.Update(wallet);

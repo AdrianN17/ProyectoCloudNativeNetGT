@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WalletService.Api.Mapper;
 using WalletService.Api.Schema;
+using WalletService.Application.Wallets.Queries.GetByEmailWallet;
 using WalletService.Application.Wallets.Queries.GetByIdWallet;
 
 namespace WalletService.Api.Controllers;
@@ -38,6 +39,22 @@ public class WalletsController(IMediator mediator) : ControllerBase
         CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetByIdWalletQuery(walletId), cancellationToken);
+
+        return result.Match(
+            dto    => Ok(dto.ToSchemaResponse()),
+            errors => ErrorOrHttp.MapToProblem(this, errors)
+        );
+    }
+
+    // GET /wallets/email/{email}
+    [HttpGet("email/{email}", Name = "Wallet_GetByEmail")]
+    [Authorize(Roles = "Support,User-App,Seller")]
+    [ProducesResponseType(typeof(WalletSchemaResponse), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetByEmail(
+        [FromRoute] string email,
+        CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new GetByEmailWalletQuery(email), cancellationToken);
 
         return result.Match(
             dto    => Ok(dto.ToSchemaResponse()),
