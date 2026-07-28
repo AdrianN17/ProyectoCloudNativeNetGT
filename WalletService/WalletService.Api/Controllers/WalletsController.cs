@@ -54,7 +54,8 @@ public class WalletsController(IMediator mediator) : ControllerBase
         [FromRoute] string email,
         CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(new GetByEmailWalletQuery(email), cancellationToken);
+        var decodedEmail = Uri.UnescapeDataString(email);
+        var result = await mediator.Send(new GetByEmailWalletQuery(decodedEmail), cancellationToken);
 
         return result.Match(
             dto    => Ok(dto.ToSchemaResponse()),
