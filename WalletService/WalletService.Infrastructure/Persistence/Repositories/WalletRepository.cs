@@ -44,7 +44,7 @@ namespace WalletService.Infrastructure.Persistence.Repositories
             return await _dbContext.Wallets
                 .Include(a => a.WalletLimit)
                 .Include(b => b.WalletBalance)
-                .FirstOrDefaultAsync(e => e.Email.Address.ToLower() == trimmed && !e.IsDeleted, cancellationToken);
+                .FirstOrDefaultAsync(e => EF.Property<string>(e, "Email").ToLower() == trimmed && !e.IsDeleted, cancellationToken);
         }
 
         public async Task UpdateAsync(Wallet wallet, CancellationToken cancellationToken = default)
