@@ -1,0 +1,74 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: apis
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mockcurrency
+  namespace: apis
+  labels:
+    app: mockcurrency
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mockcurrency
+  template:
+    metadata:
+      labels:
+        app: mockcurrency
+    spec:
+      imagePullSecrets:
+        - name: acr-secret
+      containers:
+        - name: mockcurrency
+          # Sustituido por deploy.sh con ACR_NAME e IMAGE_TAG
+          image: __ACR_NAME__.azurecr.io/mockcurrency:__IMAGE_TAG__
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "Production"
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: "http://jaeger.tracing.svc.cluster.local:4317"
+            - name: OTEL_SERVICE_NAME
+              value: "mockcurrency"
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "250m"
+              memory: "256Mi"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 15
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mockcurrency
+  namespace: apis
+spec:
+  selector:
+    app: mockcurrency
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP

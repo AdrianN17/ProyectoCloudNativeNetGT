@@ -35,34 +35,31 @@ jobs:
         IMAGE_NAME=${{ secrets.ACR_NAME }}.azurecr.io/walletservice
         TAG=${{ github.sha }}
         docker buildx build \
-          --platform linux/arm64 \
+          --platform linux/amd64 \
           -t $IMAGE_NAME:$TAG \
           --progress=plain \
           --push \
           ./WalletService
 
-    # Instalar kubelogin (requerido para clusters AKS con AAD)
-    - name: Install kubelogin
-      uses: azure/use-kubelogin@v1
-      with:
-        kubelogin-version: 'v0.1.4'
+    # [DESHABILITADO] Despliegue a AKS — usar minikube local en su lugar
+    # - name: Install kubelogin
+    #   uses: azure/use-kubelogin@v1
+    #   with:
+    #     kubelogin-version: 'v0.1.4'
 
-    # Conectar al AKS
-    - name: Set AKS context
-      uses: azure/aks-set-context@v3
-      with:
-        resource-group: ${{ secrets.AKS_RESOURCE_GROUP }}
-        cluster-name: ${{ secrets.AKS_CLUSTER_NAME }}
+    # - name: Set AKS context
+    #   uses: azure/aks-set-context@v3
+    #   with:
+    #     resource-group: ${{ secrets.AKS_RESOURCE_GROUP }}
+    #     cluster-name: ${{ secrets.AKS_CLUSTER_NAME }}
 
-    # Convertir kubeconfig para usar el token del Azure CLI (evita auth interactiva de AAD)
-    - name: Convert kubeconfig
-      run: kubelogin convert-kubeconfig -l azurecli
+    # - name: Convert kubeconfig
+    #   run: kubelogin convert-kubeconfig -l azurecli
 
-    # Sustituir imagen en el manifiesto y aplicar
-    - name: Deploy to AKS
-      run: |
-        IMAGE_NAME=${{ secrets.ACR_NAME }}.azurecr.io/walletservice
-        TAG=${{ github.sha }}
-        sed "s|ACR_NAME.azurecr.io/walletservice:IMAGE_TAG|$IMAGE_NAME:$TAG|g" \
-          ./WalletService/k8s/deployment.yaml | kubectl apply -f -
-        kubectl apply -f ./WalletService/k8s/ingress.yaml
+    # - name: Deploy to AKS
+    #   run: |
+    #     IMAGE_NAME=${{ secrets.ACR_NAME }}.azurecr.io/walletservice
+    #     TAG=${{ github.sha }}
+    #     sed "s|ACR_NAME.azurecr.io/walletservice:IMAGE_TAG|$IMAGE_NAME:$TAG|g" \
+    #       ./WalletService/k8s/deployment.yaml | kubectl apply -f -
+    #     kubectl apply -f ./WalletService/k8s/ingress.yaml
